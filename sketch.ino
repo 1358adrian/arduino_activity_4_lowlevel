@@ -18,7 +18,7 @@ volatile uint8_t blink_phase = 0;  // Blink on/off state
 
 // Constant servo values by trial and error
 const uint8_t servo_min_value = 25;
-const uint8_t servo_max_value = 192;
+const uint8_t servo_max_value = 183;
 
 void setup() {
     // ========== LED CONFIGURATION (PB0-PB3 = D8-D11) ==========
@@ -87,8 +87,8 @@ ISR(TIMER1_COMPA_vect) {
                 TCCR1B = (1 << WGM12) |          // CTC mode
                          (1 << CS11) | (1 << CS10); // Prescaler 64
                 TCNT1 = 0;       // Reset counter
-                OCR1A = 1952;     // ~7.8ms intervals; servo movement speed
-                                  // controlled by Timer1:
+                OCR1A = 3163;     // ~12.7ms intervals * (servo_max_value - servo_min_value) = 2secs;
+                                  // servo movement speed controlled by Timer1:
                                   // the higher the value, the slower the movement;
                                   // servo position is controlled by Timer0 (8-bit,
                                   // OCR0A in Fast PWM Mode, Prescaler 256,
@@ -127,7 +127,7 @@ ISR(TIMER1_COMPA_vect) {
                     TCCR1B = (1 << WGM12) | 
                              (1 << CS11) | (1 << CS10);
                     TCNT1 = 0;
-                    OCR1A = 1952;  // again, ~7.8ms intervals; servo movement speed:
+                    OCR1A = 3163;  // again, ~12.7ms intervals * (servo_max_value - servo_min_value) = 2secs;
                                    // the higher the value, the slower the movement
                     break;
                 }
