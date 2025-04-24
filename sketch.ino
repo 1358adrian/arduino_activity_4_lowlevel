@@ -31,7 +31,7 @@ void setup() {
     TCCR0A = (1 << COM0A1) |  // Clear OC0A (Pin 6) on compare match (PWM: sets LOW)
              (1 << WGM01) | (1 << WGM00);  // Fast PWM mode
     TCCR0B = (1 << CS02);      // Prescaler 256 (244.14Hz PWM)
-					                     // Computation: ((255+1)*1024/16,000,000)^-1 = 244.14Hz
+					                     // Computation: ((255+1)*256/16,000,000)^-1 = 244.14Hz
     OCR0A = servo_min_value;   // Initial duty cycle (servo_min_value/255 * 100)%
 
     // ========== BUTTON CONFIGURATION (PD2 = D2 = INT0) ==========
