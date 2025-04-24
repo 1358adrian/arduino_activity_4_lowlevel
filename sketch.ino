@@ -16,9 +16,9 @@ volatile uint8_t servo_pos = 0;    // Servo position (0-255 values are accepted)
 volatile uint8_t blink_count = 0;  // Completed blink cycles
 volatile uint8_t blink_phase = 0;  // Blink on/off state
 
-// Constant servo values
-const uint8_t servo_min_value = 0;
-const uint8_t servo_max_value = 255;
+// Constant servo values by trial and error
+const uint8_t servo_min_value = 25;
+const uint8_t servo_max_value = 192;
 
 void setup() {
     // ========== LED CONFIGURATION (PB0-PB3 = D8-D11) ==========
@@ -32,7 +32,7 @@ void setup() {
              (1 << WGM01) | (1 << WGM00);  // Fast PWM mode
     TCCR0B = (1 << CS02);      // Prescaler 256 (244.14Hz PWM)
 					                     // Computation: ((255+1)*1024/16,000,000)^-1 = 244.14Hz
-    OCR0A = 0;                 // Initial duty cycle 0%
+    OCR0A = servo_min_value;   // Initial duty cycle (servo_min_value/255 * 100)%
 
     // ========== BUTTON CONFIGURATION (PD2 = D2 = INT0) ==========
     DDRD &= ~(1 << DDD2);      // Set PD2 as input
